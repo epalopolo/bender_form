@@ -4,8 +4,8 @@ from sqlalchemy.orm import sessionmaker, Session, relationship, declarative_base
 from pydantic import BaseModel
 from datetime import date
 
-DATABASE_URL_MAIN = "sqlite:///./test.db"
-DATABASE_URL_RESPUESTAS = "sqlite:///./rt_respuestas.db"
+DATABASE_URL_MAIN = "test.db"
+DATABASE_URL_RESPUESTAS = "rt_respuestas.db"
 
 engine_main = create_engine(DATABASE_URL_MAIN, connect_args={"check_same_thread": False})
 engine_respuestas = create_engine(DATABASE_URL_RESPUESTAS, connect_args={"check_same_thread": False})
