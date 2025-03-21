@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relevamiento de trabajo</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+                  background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+                         background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #2196F3; }
+        input:checked + .slider:before { transform: translateX(26px); }
+        .subform { display: none; margin-top: 10px; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <h2>Formulario RT</h2>
+    <form id="mainForm">
+        <div>
+            <label for="fecha">Fecha del relevamiento *</label>
+            <input type="date" id="fecha" name="fecha" required>
+        </div>
+        <div>
+            <label for="cliente">Nombre del cliente *</label>
+            <select id="cliente" name="cliente" required>
+                <option value="">Seleccione...</option>
+            </select>
+        </div>
+
+        <!-- Switches -->
+        <div>
+            <label>Evaluación</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div>
+            <label>Mecánica</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div>
+            <label>Mecanizado</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Ingeniería</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Lavado</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Arenado</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Pintura</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Soldadura</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>        
+
+        <div>
+            <label>Tratamiento térmico</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Corte</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Transporte</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div>
+            <label>Plegado</label>
+            <label class="switch">
+                <input type="checkbox" class="toggle-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <!-- Subformulario único -->
+        <div id="subform" class="subform">
+            <h3>Tareas y horas</h3>
+            <div>
+                <select name="Tarea" required>
+                    <option value="">Seleccionar Tarea</option>
+                </select>
+                <select name="Pieza" required>
+                    <option value="">Seleccionar Pieza</option>
+                    <option value="No corresponde">No corresponde</option>
+                </select>
+                <select name="Maquinaria" required>
+                    <option value="">Seleccionar Maquinaria</option>
+                    <option value="No corresponde">No corresponde</option>
+                </select>
+                <input type="number" name="horas" placeholder="Horas de trabajo" required>
+            </div>
+
+            <h3>Materiales e insumos</h3>
+            <div>
+                <select id="material" name="Material_del_Insumo" required>
+                    <option value="">Seleccionar Material</option>
+                    <option value="No corresponde">No corresponde</option>
+                </select>
+                <select id= "insumo" name="Insumo" required>
+                    <option value="">Seleccionar Insumo</option>
+                </select>
+                <input type="number" name="OD" placeholder="OD">
+                <select name="unidadOD">
+                <option value="">Seleccionar unidad</option>
+                <option value="cm">centímetro</option>
+                <option value="pulg">pulgada</option>
+                <input type="number" name="ID" placeholder="ID">
+                <select name="unidadID">
+                <option value="">Seleccionar unidad</option>
+                <option value="cm">centímetro</option>
+                <option value="pulg">pulgada</option>
+                <input type="number" name="Largo" placeholder="Largo">
+                <select name="unidadLargo">
+                <option value="">Seleccionar unidad</option>
+                <option value="cm">centímetro</option>
+                <option value="m">metro</option>
+                <input type="number" name="Ancho" placeholder="Ancho">
+                <select name="unidadAncho">
+                <option value="">Seleccionar unidad</option>
+                <option value="cm">centímetro</option>
+                <option value="m">metro</option>
+                <input type="number" name="Alto" placeholder="Alto">
+                <select name="unidadAlto">
+                <option value="">Seleccionar unidad</option>
+                <option value="cm">centímetro</option>
+                <option value="m">metro</option>
+                <input type="number" name="cantidad" placeholder="Cantidad">
+            </div>
+        </div>
+
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const switches = document.querySelectorAll(".toggle-switch");
+            const subform = document.getElementById("subform");
+
+            function updateSubformVisibility() {
+                // Si al menos un switch está activado, muestra el subformulario
+                const atLeastOneChecked = Array.from(switches).some(switchEl => switchEl.checked);
+                subform.style.display = atLeastOneChecked ? "block" : "none";
+            }
+
+            // Agrega un listener a cada switch
+            switches.forEach(switchEl => {
+                switchEl.addEventListener("change", updateSubformVisibility);
+            });
+
+            // Asegura que el formulario esté oculto al inicio
+            updateSubformVisibility();
+        });
+    </script>
+
+</body>
+</html>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        async function fetchOptions(url, selectElement) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                selectElement.innerHTML = '<option value="">Seleccione...</option>';
+                data.forEach(item => {
+                    selectElement.innerHTML += `<option value="${item.nombre}">${item.nombre}</option>`;
+                });
+            } catch (error) {
+                console.error(`Error cargando datos desde ${url}:`, error);
+            }
+        }
+
+        // Mapea cada <select> con su endpoint correspondiente
+        const selectEndpoints = {
+            cliente: "/clientes/",
+            Tarea: "/tareas/",
+            Pieza: "/piezas/",
+            Maquinaria: "/maquinarias/",
+            Insumo: "/insumos/",
+            Material_del_Insumo: "/materiales_insumos/"
+        };
+
+        // Cargar los datos en cada <select>
+        Object.entries(selectEndpoints).forEach(([selectId, endpoint]) => {
+            const selectElement = document.querySelector(`select[name="${selectId}"]`);
+            if (selectElement) {
+                fetchOptions(endpoint, selectElement);
+            }
+        });
+    });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const materialSelect = document.getElementById("material");
+            const insumoSelect = document.getElementById("insumo");
+    
+            // Cargar los materiales desde el backend
+            fetch("/materiales_insumos/")
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(material => {
+                        let option = document.createElement("option");
+                        option.value = material.nombre;
+                        option.textContent = material.nombre;
+                        materialSelect.appendChild(option);
+                    });
+                });
+    
+            // Evento para actualizar insumos cuando cambia el material
+            materialSelect.addEventListener("change", function () {
+                let materialSeleccionado = materialSelect.value;
+                insumoSelect.innerHTML = '<option value="">Seleccionar Insumo</option>'; // Reset
+    
+                if (materialSeleccionado) {
+                    fetch(`/insumos/${materialSeleccionado}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(insumo => {
+                                let option = document.createElement("option");
+                                option.value = insumo.insumo;
+                                option.textContent = insumo.insumo;
+                                insumoSelect.appendChild(option);
+                            });
+                        });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
