@@ -1,0 +1,41 @@
+import pymysql
+import pandas as pd
+import os
+from dotenv import load_dotenv
+
+# Datos de conexión a Mysql
+DB_HOST = os.getenv('MYSQL_HOST')
+DB_USER = os.getenv('MYSQL_USER')
+DB_PASSWORD = os.getenv('MYSQL_PASSWORD')
+DB_NAME = os.getenv('MYSQL_DATABASE_1')
+
+# Archivo CSV
+EXCEL_FILE = "/home/evipalopolo/BenderForms/Inusmos.xlsx"
+
+# Conectar a la base de datos
+conn = pymysql.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME)
+cursor = conn.cursor()
+
+insumos_df = pd.read_excel(EXCEL_FILE, sheet_name='Sheet1')
+insumos_df = insumos_df[['Codigo', 'Materiales_insumos', 'Insumos']]
+
+
+insumos_df = insumos_df.astype(str)
+data_list = []
+for index, row in insumos_df.iterrows():
+  data_list.append(tuple(row))
+
+# Insertar datos en la tabla "pieza"
+for row in data_list:
+   sql = "INSERT INTO insumos (Codigo, materiales_insumos, insumos) VALUES (%s, %s, %s)"
+   try:
+        cursor.execute(sql, row)
+        conn.commit()
+   except pymysql.MySQLError as e:
+        print(f"Error insertando en pieza: {e}")
+
+# Cerrar conexión
+cursor.close()
+conn.close()
+
+print("Carga de datos completada con éxito.")
