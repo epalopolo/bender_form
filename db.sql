@@ -4,37 +4,37 @@ USE test_db;
 
 -- Tabla de Clientes
 CREATE TABLE IF NOT EXISTS clientes (
-    Codigo INT PRIMARY KEY,
-    RazonSocial VARCHAR(255) UNIQUE NOT NULL,
-    CUIT VARCHAR(15) NOT NULL
+    Codigo VARCHAR(20) PRIMARY KEY,
+    RazonSocial VARCHAR(255) NOT NULL,
+    CUIT VARCHAR(15)
 );
 
 -- Tabla de Opciones de Tareas
 CREATE TABLE IF NOT EXISTS tareas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    tarea VARCHAR(255) UNIQUE NOT NULL,
-    seccion VARCHAR(255)
+    ID VARCHAR(10) PRIMARY KEY,
+    Tarea VARCHAR(255) UNIQUE NOT NULL,
+    Seccion VARCHAR(255)
 );
 
 -- Tabla de Piezas
 CREATE TABLE IF NOT EXISTS piezas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    pieza VARCHAR(255) UNIQUE NOT NULL
+    Codigo VARCHAR(10) PRIMARY KEY,
+    Pieza VARCHAR(255) UNIQUE NOT NULL
 );
 
 -- Tabla de Maquinarias
 CREATE TABLE IF NOT EXISTS maquinarias (
-    codigo VARCHAR(15) PRIMARY KEY,
-    producto_codigo VARCHAR(20) NOT NULL,
+    Codigo VARCHAR(15) PRIMARY KEY,
+    Producto_codigo VARCHAR(20) NOT NULL,
     Nombre VARCHAR(255) UNIQUE NOT NULL,
     SECTOR VARCHAR(50)
 );
 
 -- Tabla de Insumos
 CREATE TABLE IF NOT EXISTS insumos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    materiales_insumos VARCHAR(255) UNIQUE NOT NULL,
-    insumos VARCHAR(255) UNIQUE NOT NULL
+    Codigo VARCHAR(15) PRIMARY KEY,
+    materiales_insumos VARCHAR(255) NOT NULL,
+    insumos VARCHAR(255) NOT NULL
 );
 -- Crear Base de Datos para Respuestas
 CREATE DATABASE IF NOT EXISTS rt_respuestas_db;
