@@ -1,1 +1,11 @@
-pip install fastapi sqlalchemy sqlalchemy.orm pydantic datetime dotenv pymysql mangum pandas Flask openpyxl
+pydantic
+Flask
+flask_sqlalchemy
+sqlalchemy
+sqlalchemy.orm
+contextlib
+pymysql
+dotenv
+datetime
+pandas
+openpyxl
