@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -57,7 +56,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Ingeniería</label>
             <label class="switch">
@@ -65,7 +64,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Lavado</label>
             <label class="switch">
@@ -73,7 +72,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Arenado</label>
             <label class="switch">
@@ -81,7 +80,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Pintura</label>
             <label class="switch">
@@ -89,14 +88,14 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Soldadura</label>
             <label class="switch">
                 <input type="checkbox" class="toggle-switch">
                 <span class="slider"></span>
             </label>
-        </div>        
+        </div>
 
         <div>
             <label>Tratamiento térmico</label>
@@ -105,7 +104,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Corte</label>
             <label class="switch">
@@ -113,7 +112,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Transporte</label>
             <label class="switch">
@@ -121,7 +120,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <div>
             <label>Plegado</label>
             <label class="switch">
@@ -129,7 +128,7 @@
                 <span class="slider"></span>
             </label>
         </div>
-        
+
         <!-- Subformulario único -->
         <div id="subform" class="subform">
             <h3>Tareas y horas</h3>
@@ -150,11 +149,11 @@
 
             <h3>Materiales e insumos</h3>
             <div>
-                <select id="material" name="Material_del_Insumo" required>
+                <select id="Material" name="Material" required>
                     <option value="">Seleccionar Material</option>
                     <option value="No corresponde">No corresponde</option>
                 </select>
-                <select id= "insumo" name="Insumo" required>
+                <select id= "Insumo" name="Insumo" required>
                     <option value="">Seleccionar Insumo</option>
                 </select>
                 <input type="number" name="OD" placeholder="OD">
@@ -185,10 +184,12 @@
                 <input type="number" name="cantidad" placeholder="Cantidad">
             </div>
         </div>
-
+        <div class="form-group">
+            <input type="submit" class="btn btn-success" value="Enviar formulario">
+        </div>
     </form>
 
-    <script>
+<script>
         document.addEventListener("DOMContentLoaded", () => {
             const switches = document.querySelectorAll(".toggle-switch");
             const subform = document.getElementById("subform");
@@ -209,79 +210,39 @@
         });
     </script>
 
-</body>
-</html>
-
     <script>
     document.addEventListener("DOMContentLoaded", async () => {
-        async function fetchOptions(url, selectElement) {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                selectElement.innerHTML = '<option value="">Seleccione...</option>';
-                data.forEach(item => {
-                    selectElement.innerHTML += `<option value="${item.nombre}">${item.nombre}</option>`;
-                });
-            } catch (error) {
-                console.error(`Error cargando datos desde ${url}:`, error);
-            }
-        }
-
-        // Mapea cada <select> con su endpoint correspondiente
-        const selectEndpoints = {
-            cliente: "/clientes/",
-            Tarea: "/tareas/",
-            Pieza: "/piezas/",
-            Maquinaria: "/maquinarias/",
-            Insumo: "/insumos/",
-            Material_del_Insumo: "/materiales_insumos/"
-        };
-
-        // Cargar los datos en cada <select>
-        Object.entries(selectEndpoints).forEach(([selectId, endpoint]) => {
-            const selectElement = document.querySelector(`select[name="${selectId}"]`);
-            if (selectElement) {
-                fetchOptions(endpoint, selectElement);
-            }
-        });
-    });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const materialSelect = document.getElementById("material");
-            const insumoSelect = document.getElementById("insumo");
+        try {
+            // Hacer una única solicitud para obtener todas las opciones
+            const response = await fetch("/opciones_formulario");
+            const data = await response.json();
     
-            // Cargar los materiales desde el backend
-            fetch("/materiales_insumos/")
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(material => {
+            // Mapeo de IDs de los selects en el HTML con las claves devueltas por la API
+            const selectMapping = {
+                cliente: "clientes",
+                Tarea: "tareas",
+                Pieza: "piezas",
+                Maquinaria: "maquinarias",
+                Material: "materiales",
+                Insumo: "insumos"
+            };
+    
+            // Iterar sobre cada select y llenarlo con las opciones correspondientes
+            Object.entries(selectMapping).forEach(([selectId, dataKey]) => {
+                const selectElement = document.querySelector(`select[name="${selectId}"]`);
+                if (selectElement && data[dataKey]) {
+                    selectElement.innerHTML = '<option value="">Seleccione...</option>'; // Resetear
+                    data[dataKey].forEach(optionValue => {
                         let option = document.createElement("option");
-                        option.value = material.nombre;
-                        option.textContent = material.nombre;
-                        materialSelect.appendChild(option);
+                        option.value = optionValue;
+                        option.textContent = optionValue;
+                        selectElement.appendChild(option);
                     });
-                });
-    
-            // Evento para actualizar insumos cuando cambia el material
-            materialSelect.addEventListener("change", function () {
-                let materialSeleccionado = materialSelect.value;
-                insumoSelect.innerHTML = '<option value="">Seleccionar Insumo</option>'; // Reset
-    
-                if (materialSeleccionado) {
-                    fetch(`/insumos/${materialSeleccionado}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            data.forEach(insumo => {
-                                let option = document.createElement("option");
-                                option.value = insumo.insumo;
-                                option.textContent = insumo.insumo;
-                                insumoSelect.appendChild(option);
-                            });
-                        });
                 }
             });
-        });
+    
+        } catch (error) {
+            console.error("Error cargando las opciones del formulario:", error);
+        }
+    });
     </script>
-</body>
-</html>
