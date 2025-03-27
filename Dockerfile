@@ -1,31 +1,28 @@
-# Utiliza una imagen base de Python
-FROM python:3.9-slim
+# Usamos una imagen base de Python
+FROM python:3.8-slim
 
-# Establece el directorio de trabajo en /app
+# Establecemos el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia todos los archivos del proyecto al contenedor
-COPY . /app
+# Copiamos el archivo requirements.txt al contenedor
+COPY requirements.txt .
 
-# Instala las dependencias de Python desde requirements.txt
-RUN pip install -r requirements.txt
+# Instalamos dependencias del sistema necesarias (como gcc, libmysqlclient-dev)
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libmysqlclient-dev \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Crea las bases de datos y tablas desde el script db.sql
-# Asume que tienes acceso a MySQL o PostgreSQL
-# Asegúrate de tener configuradas las variables de entorno necesarias para MySQL en tu archivo .env
+# Instalamos las dependencias de Python
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Aquí suponemos que ya tienes un archivo .env que contiene las credenciales
-# De ser necesario, agrega este comando para cargarlas:
-RUN python -c "from dotenv import load_dotenv; load_dotenv()"
+# Copiamos el resto del código de la aplicación
+COPY . .
 
-# Comando para crear las bases de datos y las tablas (carga el script db.sql)
-RUN mysql -u $MYSQL_USER -p$MYSQL_PASSWORD -h $MYSQL_HOST -e "source db.sql"
+# Exponemos el puerto en el que la app va a correr
+EXPOSE 8000
 
-# Poblar las bases de datos usando el script populate_db.py
-RUN python populate_db.py
-
-# Exponer el puerto para el servidor web (generalmente 5000 para Flask, o el que uses en tu app)
-EXPOSE 5000
-
-# Ejecutar la aplicación Flask con app.py
+# Comando para ejecutar la app
 CMD ["python", "app.py"]
+
