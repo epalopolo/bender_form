@@ -85,7 +85,7 @@ for index, row in maquinaria_df.iterrows():
 
 # Insertar datos en la tabla "maquinaria"
 for row in data_list:
-   sql = "INSERT INTO maquinaria (Codigo, Producto_Codigo, Nombre) VALUES (%s, %s, %s)"
+   sql = "INSERT INTO maquinarias (Codigo, Producto_Codigo, Nombre) VALUES (%s, %s, %s)"
    try:
         cursor.execute(sql, row)
         conn.commit()
