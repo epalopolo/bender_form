@@ -12,24 +12,24 @@ DB_PASSWORD = os.getenv('MYSQL_PASSWORD')
 DB_NAME = os.getenv('MYSQL_DATABASE_1')
 
 # Archivo CSV
-EXCEL_FILE = "/home/evipalopolo/BenderForms/Inusmos.xlsx"
+EXCEL_FILE = "https://github.com/epalopolo/bender_form/edit/main/Copia de Campos para formulario bender(1)"
 
 # Conectar a la base de datos
 conn = pymysql.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME)
 cursor = conn.cursor()
 
-insumos_df = pd.read_excel(EXCEL_FILE, sheet_name='Sheet1')
-insumos_df = insumos_df[['Codigo', 'Materiales_insumos', 'Insumos']]
+clientes_df = pd.read_excel(EXCEL_FILE, sheet_name='Clientes')
+clientes_df = clientes_df[['Codigo', 'RazonSocial', 'CUIT']]
 
 
-insumos_df = insumos_df.astype(str)
+clientes_df = clientes_df.astype(str)
 data_list = []
-for index, row in insumos_df.iterrows():
+for index, row in clientes_df.iterrows():
   data_list.append(tuple(row))
 
-# Insertar datos en la tabla "pieza"
+# Insertar datos en la tabla "clientes"
 for row in data_list:
-   sql = "INSERT INTO insumos (Codigo, materiales_insumos, insumos) VALUES (%s, %s, %s)"
+   sql = "INSERT INTO clientes (Codigo, RazonSocial, CUIT) VALUES (%s, %s, %s)"
    try:
         cursor.execute(sql, row)
         conn.commit()
@@ -40,4 +40,116 @@ for row in data_list:
 cursor.close()
 conn.close()
 
-print("Carga de datos completada con éxito.")
+print("Carga de datos de CLIENTES completada con éxito.")
+
+# Conectar a la base de datos
+conn = pymysql.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME)
+cursor = conn.cursor()
+
+insumos_df = pd.read_excel(EXCEL_FILE, sheet_name='Insumos')
+insumos_df = insumos_df[['Codigo', 'Materiales_insumos', 'Insumos']]
+
+
+insumos_df = insumos_df.astype(str)
+data_list = []
+for index, row in insumos_df.iterrows():
+  data_list.append(tuple(row))
+
+# Insertar datos en la tabla "insumos"
+for row in data_list:
+   sql = "INSERT INTO insumos (Codigo, Materiales_insumos, Insumos) VALUES (%s, %s, %s)"
+   try:
+        cursor.execute(sql, row)
+        conn.commit()
+   except pymysql.MySQLError as e:
+        print(f"Error insertando en pieza: {e}")
+
+# Cerrar conexión
+cursor.close()
+conn.close()
+
+print("Carga de datos de INSUMOS completada con éxito.")
+
+# Conectar a la base de datos
+conn = pymysql.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME)
+cursor = conn.cursor()
+
+maquinaria_df = pd.read_excel(EXCEL_FILE, sheet_name='Maquinaria')
+maquinaria_df = maquinaria_df[['Codigo', 'Producto_Codigo', 'Nombre']]
+
+
+maquinaria_df = maquinaria_df.astype(str)
+data_list = []
+for index, row in maquinaria_df.iterrows():
+  data_list.append(tuple(row))
+
+# Insertar datos en la tabla "maquinaria"
+for row in data_list:
+   sql = "INSERT INTO maquinaria (Codigo, Producto_Codigo, Nombre) VALUES (%s, %s, %s)"
+   try:
+        cursor.execute(sql, row)
+        conn.commit()
+   except pymysql.MySQLError as e:
+        print(f"Error insertando en pieza: {e}")
+
+# Cerrar conexión
+cursor.close()
+conn.close()
+
+print("Carga de datos de MAQUINARIA completada con éxito.")
+
+# Conectar a la base de datos
+conn = pymysql.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME)
+cursor = conn.cursor()
+
+tareas_df = pd.read_excel(EXCEL_FILE, sheet_name='Tareas')
+tareas_df = tareas_df[['ID', 'Tarea']]
+
+
+tareas_df = tareas_df.astype(str)
+data_list = []
+for index, row in tareas_df.iterrows():
+  data_list.append(tuple(row))
+
+# Insertar datos en la tabla "tareas"
+for row in data_list:
+   sql = "INSERT INTO tareas (ID, Tarea) VALUES (%s, %s)"
+   try:
+        cursor.execute(sql, row)
+        conn.commit()
+   except pymysql.MySQLError as e:
+        print(f"Error insertando en pieza: {e}")
+
+# Cerrar conexión
+cursor.close()
+conn.close()
+
+print("Carga de datos de TAREAS completada con éxito.")
+
+# Conectar a la base de datos
+conn = pymysql.connect(host=DB_HOST, user=DB_USER, passwd=DB_PASSWORD, db=DB_NAME)
+cursor = conn.cursor()
+
+piezas_df = pd.read_excel(EXCEL_FILE, sheet_name='Piezas')
+piezas_df = piezas_df[['Codigo', 'Pieza']]
+
+
+piezas_df = piezas_df.astype(str)
+data_list = []
+for index, row in piezas_df.iterrows():
+  data_list.append(tuple(row))
+
+# Insertar datos en la tabla "piezas"
+for row in data_list:
+   sql = "INSERT INTO piezas (Codigo, pieza) VALUES (%s, %s)"
+   try:
+        cursor.execute(sql, row)
+        conn.commit()
+   except pymysql.MySQLError as e:
+        print(f"Error insertando en pieza: {e}")
+
+# Cerrar conexión
+cursor.close()
+conn.close()
+
+print("Carga de datos de PIEZAS completada con éxito.")
